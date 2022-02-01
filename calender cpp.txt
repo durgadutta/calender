@@ -1,0 +1,92 @@
+#include <iostream>
+using namespace std;
+
+string month_func(int num) {
+    switch(num) {
+        // returns month name corresponding to month number
+        case 1:
+            return "January";
+        case 2:
+            return "February";
+        case 3:
+            return "March";
+        case 4:
+            return "April";
+        case 5:
+            return "May";
+        case 6:
+            return "June";
+        case 7:
+            return "July";
+        case 8:
+            return "August";
+        case 9:
+            return "September";
+        case 10:
+            return "October";
+        case 11:
+            return "November";
+        case 12:
+            return "December";
+    }
+}
+
+bool leap_func(int x) {
+    // leap year check and return true or false
+   if (x % 4 == 0) {
+       if (x % 100 == 0) {
+           if (x % 400 == 0)
+               return true;
+           else
+               return false;
+       }
+        else
+              return true;
+       }
+   else
+       return false;
+}
+
+string end(int j) {
+    if (j % 10 == 1 && j != 11) 
+        return "st"; // to get the format as "1st", "21st" but not "11st"
+    else if (j % 10 == 2 && j != 12)
+        return "nd"; // to get the format as "2nd", "22nd" but not "12nd"
+    else if (j % 10 == 3 && j != 13)
+        return "rd"; // to get the format as "3rd", "23rd" but not "13rd"
+    else
+        return "th";
+        // remove end(j) function in cout's to get numbers 1, 2 instead of 1st, 2nd and comment out the entire string end(int j) function
+}
+
+int main() {
+    int year;
+    cout << "Year: ";
+    cin >> year;
+    
+    for(int i = 1; i <= 12; i++) {
+        string month = month_func(i); 
+        bool x = leap_func(year);
+        cout << month << " month:" << endl; // comment out if you dont want Month description
+        for(int j = 1; j <= 31; j++) {
+            if(i == 1 || i == 3 || i == 5 || i == 7 || i == 8 || i == 10 || i == 12) {
+                cout << j << end(j) << " " << month << ", " << year << endl; // for 31 days
+            } else if(j < 31 && i != 2) {
+                cout << j << end(j) << " " << month << ", " << year << endl; // for 30 days
+            }
+            else {
+                // for February month
+                if(x && j <= 29) {
+                    // leap year, 29 days in february
+                    cout << j << end(j) << " " << month << ", " << year << endl;
+                } else if(j <= 28){
+                    // not a leap year, 28 days in february
+                    cout << j << end(j) << " " << month << ", " << year << endl;
+                }
+            }
+        }
+        cout << endl; // comment out this line to remove line gap between
+        
+    }
+    return 0;
+}
